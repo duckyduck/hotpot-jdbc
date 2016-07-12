@@ -7,12 +7,12 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface Query {
+public @interface Update {
 
     String value() default "";
 
     String sql() default "";
 
-    Class<?> type() default Object.class;
+    String[] keys() default {};
 
 }

@@ -1,20 +1,16 @@
 package com.hotpot.jdbc.object;
 
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-/**
- * Created by Anker on 16/7/4.
- */
-public class DaoInvokeSource {
+public class DaoInvocationSource {
 
     private String sql;
+
+    private String[] keys;
 
     private Class<?> returnType;
 
     private MapSqlParameterSource parameter;
-
-    private NamedParameterJdbcTemplate template;
 
     public String getSql() {
         return sql;
@@ -22,6 +18,14 @@ public class DaoInvokeSource {
 
     public void setSql(String sql) {
         this.sql = sql;
+    }
+
+    public String[] getKeys() {
+        return keys;
+    }
+
+    public void setKeys(String[] keys) {
+        this.keys = keys;
     }
 
     public Class<?> getReturnType() {
@@ -34,14 +38,6 @@ public class DaoInvokeSource {
 
     public MapSqlParameterSource getParameter() {
         return parameter;
-    }
-
-    public NamedParameterJdbcTemplate getTemplate() {
-        return template;
-    }
-
-    public void setTemplate(NamedParameterJdbcTemplate template) {
-        this.template = template;
     }
 
     public void setParameter(MapSqlParameterSource parameter) {

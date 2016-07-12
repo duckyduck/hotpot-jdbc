@@ -6,9 +6,6 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-/**
- * Created by Anker on 16/7/4.
- */
 public class ArraySqlParameterSource implements SqlParameterSource {
 
     private Object[] params;
