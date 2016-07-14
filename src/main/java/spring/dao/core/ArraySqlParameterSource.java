@@ -6,13 +6,13 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class ArraySqlParameterSource implements SqlParameterSource {
+class ArraySqlParameterSource implements SqlParameterSource {
 
     private Object[] params;
 
     private MapSqlParameterSource valueIndex;
 
-    public ArraySqlParameterSource(MapSqlParameterSource valueIndex, Object[] params) {
+    ArraySqlParameterSource(MapSqlParameterSource valueIndex, Object[] params) {
         this.params = params;
         this.valueIndex = valueIndex;
     }

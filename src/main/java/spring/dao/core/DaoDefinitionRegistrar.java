@@ -4,14 +4,20 @@ import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConstructorArgumentValues;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
+import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
+import org.springframework.util.ClassUtils;
 import spring.dao.annotation.Dao;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class DaoDefinitionRegistrar implements ImportBeanDefinitionRegistrar {
@@ -26,7 +32,7 @@ public class DaoDefinitionRegistrar implements ImportBeanDefinitionRegistrar {
         };
         provider.addIncludeFilter(new AnnotationTypeFilter(Dao.class, false));
 
-        String[] packages = (String[]) annotationMetadata.getAnnotationAttributes(ComponentScan.class.getName()).get("value");
+        Set<String> packages = getPackagesToScan(annotationMetadata);
 
         for (String p : packages) {
             Set<BeanDefinition> beans = provider.findCandidateComponents(p);
@@ -40,7 +46,7 @@ public class DaoDefinitionRegistrar implements ImportBeanDefinitionRegistrar {
                     RootBeanDefinition rbd = new RootBeanDefinition();
                     rbd.setTargetType(dao);
                     rbd.setConstructorArgumentValues(values);
-                    rbd.setScope(RootBeanDefinition.SCOPE_SINGLETON);
+                    rbd.setScope(BeanDefinition.SCOPE_SINGLETON);
                     rbd.setFactoryBeanName(DaoProxyFactory.class.getName());
                     rbd.setUniqueFactoryMethodName(DaoProxyFactory.FACTORY_METHOD_NAME);
 
@@ -50,6 +56,34 @@ public class DaoDefinitionRegistrar implements ImportBeanDefinitionRegistrar {
                 }
             }
         }
+
+        GenericBeanDefinition gbd = new GenericBeanDefinition();
+        gbd.setSynthetic(true);
+        gbd.setBeanClass(DaoProxyFactory.class);
+        gbd.setScope(BeanDefinition.SCOPE_SINGLETON);
+        gbd.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
+
+        beanDefinitionRegistry.registerBeanDefinition(DaoProxyFactory.class.getName(), gbd);
+
+    }
+
+    private Set<String> getPackagesToScan(AnnotationMetadata metadata) {
+        AnnotationAttributes attributes = AnnotationAttributes
+                .fromMap(metadata.getAnnotationAttributes(ComponentScan.class.getName()));
+        String[] value = attributes.getStringArray("value");
+        String[] basePackages = attributes.getStringArray("basePackages");
+        Class<?>[] basePackageClasses = attributes.getClassArray("basePackageClasses");
+        Set<String> packagesToScan = new LinkedHashSet<String>();
+        packagesToScan.addAll(Arrays.asList(value));
+        packagesToScan.addAll(Arrays.asList(basePackages));
+        for (Class<?> basePackageClass : basePackageClasses) {
+            packagesToScan.add(ClassUtils.getPackageName(basePackageClass));
+        }
+        if (packagesToScan.isEmpty()) {
+            return Collections
+                    .singleton(ClassUtils.getPackageName(metadata.getClassName()));
+        }
+        return packagesToScan;
     }
 
 }

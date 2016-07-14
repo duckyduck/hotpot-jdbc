@@ -3,7 +3,6 @@ package spring.dao.core;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.util.StringUtils;
@@ -12,14 +11,12 @@ import spring.dao.annotation.Dao;
 import javax.sql.DataSource;
 import java.lang.reflect.Proxy;
 
-
-@Configuration
-public class DaoProxyFactory {
+class DaoProxyFactory {
 
     @Autowired
     private DefaultListableBeanFactory factory;
 
-    public static final String FACTORY_METHOD_NAME = "proxy";
+    static final String FACTORY_METHOD_NAME = "proxy";
 
     public Object proxy(Class<?> clazz) {
         Dao dao = clazz.getAnnotation(Dao.class);
