@@ -1,4 +1,4 @@
-package com.hotpot.jdbc.core;
+package spring.dao.core;
 
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;

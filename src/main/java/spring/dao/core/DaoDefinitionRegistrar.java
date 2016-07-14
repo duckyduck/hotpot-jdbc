@@ -1,6 +1,5 @@
-package com.hotpot.jdbc.core;
+package spring.dao.core;
 
-import com.hotpot.jdbc.annotation.Dao;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConstructorArgumentValues;
@@ -11,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
+import spring.dao.annotation.Dao;
 
 import java.util.Set;
 

@@ -1,4 +1,4 @@
-package com.hotpot.jdbc.annotation;
+package spring.dao.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

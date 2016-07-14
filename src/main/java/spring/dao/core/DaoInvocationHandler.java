@@ -1,9 +1,5 @@
-package com.hotpot.jdbc.core;
+package spring.dao.core;
 
-import com.hotpot.jdbc.annotation.Param;
-import com.hotpot.jdbc.annotation.Query;
-import com.hotpot.jdbc.annotation.Update;
-import com.hotpot.jdbc.object.DaoInvocationSource;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.cglib.core.ReflectUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -11,6 +7,10 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.util.StringUtils;
+import spring.dao.annotation.Param;
+import spring.dao.annotation.Query;
+import spring.dao.annotation.Update;
+import spring.dao.object.DaoInvocationSource;
 
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;

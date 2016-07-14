@@ -1,6 +1,5 @@
-package com.hotpot.jdbc.core;
+package spring.dao.core;
 
-import com.hotpot.jdbc.annotation.Dao;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
@@ -8,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.util.StringUtils;
+import spring.dao.annotation.Dao;
 
 import javax.sql.DataSource;
 import java.lang.reflect.Proxy;
@@ -68,7 +68,7 @@ public class DaoProxyFactory {
         return null;
     }
 
-    public NamedParameterJdbcTemplate registerTemplate(String name, NamedParameterJdbcTemplate template) {
+    private NamedParameterJdbcTemplate registerTemplate(String name, NamedParameterJdbcTemplate template) {
         try {
             factory.registerSingleton(name, template);
             return template;
@@ -77,7 +77,7 @@ public class DaoProxyFactory {
         }
     }
 
-    public <T> T getBean(Class<T> requiredType) {
+    private <T> T getBean(Class<T> requiredType) {
         try {
             return factory.getBean(requiredType);
         } catch (NoSuchBeanDefinitionException e) {
@@ -85,7 +85,7 @@ public class DaoProxyFactory {
         }
     }
 
-    public Object getBean(String name) {
+    private Object getBean(String name) {
         try {
             return factory.getBean(name);
         } catch (NoSuchBeanDefinitionException e) {
