@@ -1,1 +1,1 @@
-# hotpot-jdbc
+# spring-dao
